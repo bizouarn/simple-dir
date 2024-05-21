@@ -182,7 +182,7 @@ function display_block( $file )
 	else
 	{
 		$rtn .= "<div class=\"data upper size fs-0-7\"><span class=\"bold\">Taille:</span> " . display_size(filesize($file)) . "</div>";
-		$rtn .= "<div class=\"data upper modified fs-0-7\"><span class=\"bold\">Modifié le : </span> " . date("d M Y", filemtime($file)) . "</div>";	
+		$rtn .= "<div class=\"data upper modified fs-0-7\"><span class=\"bold\">Modifié le : </span> " . date("d/m/Y", filemtime($file)) . "</div>";	
 	}
 	$rtn .= "</div>";
 	$rtn .= "</a>";
