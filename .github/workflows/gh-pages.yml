@@ -1,0 +1,32 @@
+# Nom de notre workflow
+name: "Github pages"
+
+# Événements sur lesquels il doit être déclenché
+on:
+  push:         # <- Déclenché lorsque l'on pousse du code...
+    branches:
+      - main  # <- ... mais seulement sur la branche "master"
+
+jobs:
+  # Notre job
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # Tâches à effectuer, comme expliquées ci-dessus
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          ini-values: post_max_size=256M, max_execution_time=180
+      # 1. Partie Build
+      - name: "Build"
+        run: |
+          php -f index.php > index.html
+      # 2. Déploiement sur les Github Pages
+      - name: "Deploy Github Pages"
+        uses: JamesIves/github-pages-deploy-action@v4.6.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages     # <- Branche sur laquelle seront commités les fichiers
+          folder: . 
