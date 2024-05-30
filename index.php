@@ -15,7 +15,7 @@ Modified by (c) 2024 Aymeric BIZOUARN
 	// STYLING (light or dark)
 	$color	= "light";
 	// ADD SPECIFIC FILES YOU WANT TO IGNORE HERE
-	$ignore_file_list = array( ".htaccess", "index.php" );
+	$ignore_file_list = array( ".htaccess", "index.php", ".git", ".icones" );
 	// ADD SPECIFIC FILE EXTENSIONS YOU WANT TO IGNORE HERE, EXAMPLE: array('psd','jpg','jpeg')
 	$ignore_ext_list = array( "config" );
 	// SORT BY
@@ -171,7 +171,11 @@ function display_block( $file )
 	} else {
 		$rtn .= "<a href=\"$file\" class=\"$file_ext\"{$download_att}>";
 	}
-	$rtn .= "<div class=\"img $file_ext\"></div>";
+	if (file_exists(".icones/".basename($file).".png")){
+		$rtn .= "<div class=\"img md\" style=\"background: url('.icones/".basename($file).".png') no-repeat 0 0; background-size: contain;\"></div>";
+	} else {
+		$rtn .= "<div class=\"img $file_ext\"></div>";
+	}
 	$rtn .= "<div class=\"name\">";
 	$rtn .= "<div class=\"file fs-1-2 bold\">" . basename($file) . "</div>";
 	if ($file_ext === "dir") 
