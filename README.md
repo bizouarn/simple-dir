@@ -7,3 +7,4 @@ Fork de https://github.com/halgatewood/file-directory-list/
 # Modifications apportées dans cette version :
 - Réduction de la taille du script de 41ko à 19ko.
 - Ajout du support des raccourcis (URL) Windows.
+- Ajout du support des icônes personnalisées.
