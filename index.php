@@ -32,13 +32,12 @@ Modified by (c) 2024 Aymeric BIZOUARN
 	if( !$title ) { $title = clean_title(basename(dirname(__FILE__))); }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 	<title><?php echo $title; ?></title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0, viewport-fit=cover">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<link href="//fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css" />
+	<link href="//fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
 	<style>
 		*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 		body { background: #dadada; font-family: "Lato", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: 400; font-size: 14px; line-height: 18px; padding: 0; margin: 0; text-align: center;}
@@ -280,7 +279,7 @@ function build_blocks( $items, $folder )
 build_blocks( scandir( dirname(__FILE__) ), false );
 ?>
 <?php if($toggle_sub_folders) { ?>
-<script type="text/javascript">
+<script>
 	$(function() {
 		$("a.dir").click(function(e)
 		{
