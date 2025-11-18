@@ -266,13 +266,9 @@ function build_blocks( $items, $folder )
 	elseif( $sort_by == "name_asc" ) { natsort($objects['files']); }
 	elseif( $sort_by == "name_desc" ) { arsort($objects['files']); }
 	
-	foreach($objects['files'] as $t => $file)
-	{
-		$fileExt = ext($file);
-		if( in_array($file, $ignore_file_list) || in_array($fileExt, $ignore_ext_list))
-			continue; 
-		echo display_block( $file );
-	}
+	foreach($objects['files'] as $file) 
+		if(!in_array($file, $ignore_file_list) && !in_array(ext($file), $ignore_ext_list))
+			echo display_block($file);
 }
 
 // GET THE BLOCKS STARTED, FALSE TO INDICATE MAIN FOLDER
