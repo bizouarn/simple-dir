@@ -15,9 +15,9 @@ Modified by (c) 2024 Aymeric BIZOUARN
 	// STYLING (light or dark)
 	$color	= "light";
 	// ADD SPECIFIC FILES YOU WANT TO IGNORE HERE
-	$ignore_file_list = array( ".htaccess", "index.php", ".git", ".icones" );
+	$ignore_file_list = array(".htaccess", "index.php", ".git", ".icones");
 	// ADD SPECIFIC FILE EXTENSIONS YOU WANT TO IGNORE HERE, EXAMPLE: array('psd','jpg','jpeg')
-	$ignore_ext_list = array( "config" );
+	$ignore_ext_list = array("config");
 	// SORT BY
 	$sort_by = "name_asc"; // options: name_asc, name_desc, date_asc, date_desc
 	// ICON URL
@@ -29,7 +29,7 @@ Modified by (c) 2024 Aymeric BIZOUARN
 	// IGNORE EMPTY FOLDERS
 	$ignore_empty_folders = true;
 	// SET TITLE BASED ON FOLDER NAME, IF NOT SET ABOVE
-	if( !$title ) { $title = clean_title(basename(dirname(__FILE__))); }
+	if(!$title) { $title = clean_title(basename(dirname(__FILE__))); }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -97,7 +97,7 @@ Modified by (c) 2024 Aymeric BIZOUARN
 <?php
 function clean_title($title)
 {
-	return ucwords( str_replace( array("-", "_"), " ", $title) );
+	return ucwords(str_replace(array("-", "_"), " ", $title));
 }
 
 function ext($filename) 
@@ -115,7 +115,7 @@ function display_size($bytes, $precision = 2)
 	return round($bytes, $precision) . '<span class="fs-0-8 bold">' . $units[$pow] . "</span>";
 }
 
-function count_dir_files( $dir)
+function count_dir_files($dir)
 {
 	return iterator_count(new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS));
 }
@@ -153,15 +153,15 @@ function extract_url_from_shortcut($file) {
 }
 
 // SHOW THE MEDIA BLOCK
-function display_block( $file )
+function display_block($file)
 {
 	global $ignore_file_list, $ignore_ext_list, $force_download;
 	
 	$file_ext = ext($file);
-	if( !$file_ext AND is_dir($file)) $file_ext = "dir";
+	if(!$file_ext AND is_dir($file)) $file_ext = "dir";
 	if(in_array($file, $ignore_file_list) || in_array($file_ext, $ignore_ext_list)) return;
 	
-	$download_att = ($force_download AND $file_ext != "dir" ) ? " download='" . basename($file) . "'" : "";
+	$download_att = ($force_download AND $file_ext != "dir") ? " download='" . basename($file) . "'" : "";
 	
 	$rtn = "<div class=\"block\">";
 	if ($file_ext === "url"){
@@ -194,7 +194,7 @@ function display_block( $file )
 }
 
 // RECURSIVE FUNCTION TO BUILD THE BLOCKS
-function build_blocks( $items, $folder )
+function build_blocks($items, $folder)
 {
 	global $ignore_file_list, $ignore_ext_list, $sort_by, $toggle_sub_folders, $ignore_empty_folders;
 	
@@ -205,21 +205,21 @@ function build_blocks( $items, $folder )
 	foreach($items as $c => $item)
 	{
 		$file_ext = ext($item);
-		if( $item == ".." 
+		if($item == ".." 
 			|| $item == "."
 			|| in_array($item, $ignore_file_list)
 			|| in_array($file_ext, $ignore_ext_list)
 		) continue;
 	
-		if( $folder && $item )
+		if($folder && $item)
 		{
 			$item = "$folder/$item";
 		}
-		if( is_dir($item) ) // DIRECTORIES
+		if(is_dir($item)) // DIRECTORIES
 		{
 			$objects['directories'][] = $item; 
 		}
-		else if( $item ) // FILES
+		else if($item) // FILES
 		{
 			$file_time = date("U", filemtime($item));
 			$objects['files'][$file_time . "-" . $item] = $item;
@@ -228,15 +228,15 @@ function build_blocks( $items, $folder )
 	
 	foreach($objects['directories'] as $c => $file)
 	{
-		$sub_items = (array) scandir( $file );
+		$sub_items = (array) scandir($file);
 		
-		if( $ignore_empty_folders )
+		if($ignore_empty_folders)
 		{
 			$has_sub_items = false;
-			foreach( $sub_items as $sub_item )
+			foreach($sub_items as $sub_item)
 			{
-				$sub_fileExt = ext( $sub_item );
-				if( $sub_item == ".." OR $sub_item == "."
+				$sub_fileExt = ext($sub_item);
+				if($sub_item == ".." OR $sub_item == "."
 					|| in_array($sub_item, $ignore_file_list)
 					|| in_array($sub_fileExt, $ignore_ext_list)
 				) continue;
@@ -245,38 +245,34 @@ function build_blocks( $items, $folder )
 				break;	
 			}
 			
-			if( $has_sub_items ) echo display_block( $file );
+			if($has_sub_items) echo display_block($file);
 		}
 		else
 		{
-			echo display_block( $file );
+			echo display_block($file);
 		}
 		
-		if( $toggle_sub_folders && $sub_items )
+		if($toggle_sub_folders && $sub_items)
 		{
 			echo "<div class='sub' data-folder=\"$file\">";
-			build_blocks( $sub_items, $file );
+			build_blocks($sub_items, $file);
 			echo "</div>";
 		}
 	}
 	
 	// SORT BEFORE LOOP
-	if( $sort_by == "date_asc" ) { ksort($objects['files']); }
-	elseif( $sort_by == "date_desc" ) { krsort($objects['files']); }
-	elseif( $sort_by == "name_asc" ) { natsort($objects['files']); }
-	elseif( $sort_by == "name_desc" ) { arsort($objects['files']); }
+	if($sort_by == "date_asc") { ksort($objects['files']); }
+	elseif($sort_by == "date_desc") { krsort($objects['files']); }
+	elseif($sort_by == "name_asc") { natsort($objects['files']); }
+	elseif($sort_by == "name_desc") { arsort($objects['files']); }
 	
-	foreach($objects['files'] as $t => $file)
-	{
-		$fileExt = ext($file);
-		if( in_array($file, $ignore_file_list) || in_array($fileExt, $ignore_ext_list))
-			continue; 
-		echo display_block( $file );
-	}
+	foreach($objects['files'] as $file) 
+		if(!in_array($file, $ignore_file_list) && !in_array(ext($file), $ignore_ext_list))
+			echo display_block($file);
 }
 
 // GET THE BLOCKS STARTED, FALSE TO INDICATE MAIN FOLDER
-build_blocks( scandir( dirname(__FILE__) ), false );
+build_blocks(scandir(dirname(__FILE__)), false);
 ?>
 <?php if($toggle_sub_folders) { ?>
 <script>
